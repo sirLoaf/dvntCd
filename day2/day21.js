@@ -1,18 +1,35 @@
 var fs = require('fs');
 
-function init() {
+function readData(){
     fs.readFile('./input.txt', 'utf8', (err, data) => {
         if(err) throw err;
         arr = data.split(",").map(x => parseInt(x));
-        //console.log(arr);
-        arr[1]=12;
-        arr[2]=2;
-        resetProgram(arr);
-        //console.log(arr);
-        console.log(arr[0]);
+        //return arr;
+        figuringOut(arr);
     });
 }
-init();
+
+function init(noun, verb, arr) {
+    var copyOfData = arr.slice();
+    copyOfData[1]=noun;
+    copyOfData[2]=verb;
+    resetProgram(copyOfData);
+    //console.log(arr);
+    if(copyOfData[0] === 19690720){
+        console.log("YES: " + noun +" "+verb)
+    }
+    //console.log(noun + " " + verb + copyOfData[0]);
+
+}
+function figuringOut(arr){
+    for(var i = 0; i < 100; i++){
+        for(var j = 0; j < 100; j++){
+            init(i, j, arr);
+        }
+    }
+}
+readData();
+
 
 function resetProgram(inputArr){
     for(var i = 0; i<inputArr.length; i+=4){
